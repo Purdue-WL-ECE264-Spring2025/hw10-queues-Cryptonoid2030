@@ -28,14 +28,27 @@ void insert_at_tail(struct linked_list *list, size_t value) {
     cur->next = node;
 }
 
+// size_t remove_from_head(struct linked_list *list) {
+//     if (!list->head) return false; // how to handle if empty linked list in queue.c?
+//     struct list_node *temp = list->head;
+//     size_t value = temp->value;
+//     list->head = list->head->next;
+//     free(temp);
+//     return value;
+// }
+
 size_t remove_from_head(struct linked_list *list) {
-    if (!list->head) return false;
-    struct list_node *temp = list->head;
-    size_t value = temp->value;
-    list->head = list->head->next;
-    free(temp);
-    return value;
+  if (!list->head) {
+    printf("\nreeeeeee\n");
+    return (size_t)-1;  // or SIZE_MAX
+  }
+  struct list_node *temp = list->head;
+  size_t value = temp->value;
+  list->head = list->head->next;
+  free(temp);
+  return value;
 }
+
 
 size_t remove_from_tail(struct linked_list *list) {
     if (!list->head) return false;
