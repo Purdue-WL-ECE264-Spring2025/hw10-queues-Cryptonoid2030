@@ -56,8 +56,24 @@ void enqueue(struct queue *q, struct game_state state) {
 }
 
 struct game_state dequeue(struct queue *q) {
-    return deserialize(remove_from_head(&q->data));
+  size_t removed = remove_from_head(&q->data);
+  struct game_state result;
+  if (removed == (size_t) - 1){
+      fprintf(stderr, "Error: Tried to dequeue from an empty queue.\n");
+      exit(EXIT_FAILURE);  // or handle gracefully
+  }
+  result = deserialize(removed);
+  return result;
 }
+
+// struct game_state dequeue(struct queue *q) {
+//   if (!remove_from_head(&q->data)) {
+//       fprintf(stderr, "Error: Tried to dequeue from an empty queue.\n");
+//       exit(EXIT_FAILURE);  // or handle gracefully
+//   }
+//   return deserialize(remove_from_head(&q->data));
+// }
+
 
 int number_of_moves(struct game_state start) {
     struct queue q = { .data = { .head = NULL } };
@@ -85,7 +101,7 @@ int number_of_moves(struct game_state start) {
                 {5, 6, 7, 8}, 
                 {9, 10, 11, 12}, 
                 {13, 14, 15, 0}}, // Target state
-            .empty_row = 3, .empty_col = 3, .num_steps = cur.num_steps
+            .empty_row = 3, .empty_col = 3, .num_steps = cur.num_steps // Compare to serialized board at current step
         })) 
         {
             return cur.num_steps;
@@ -117,13 +133,7 @@ int number_of_moves(struct game_state start) {
             enqueue(&q, next);
         }
 
-  //       deserialShow(cur, (struct game_state){.tiles = {
-  //         {1, 2, 3, 4}, 
-  //         {5, 6, 7, 8}, 
-  //         {9, 10, 11, 12}, 
-  //         {13, 14, 15, 0}}, // Target state
-  //     .empty_row = 3, .empty_col = 3, .num_steps = 0
-  // });
+        // deserialShow(cur, next);
     }
     
     return -1; // No solution found
