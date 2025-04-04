@@ -76,7 +76,7 @@ int number_of_moves(struct game_state start) {
         // Mark the current state as visited
         mark_visited(&visited, serialize(cur));
 
-        printf("Dequeued state: num_steps = %d\n", cur.num_steps);
+        //printf("Dequeued state: num_steps = %d\n", cur.num_steps);
 
         // Check if the current state is the target state
         
@@ -117,13 +117,13 @@ int number_of_moves(struct game_state start) {
             enqueue(&q, next);
         }
 
-        deserialShow(cur, (struct game_state){.tiles = {
-          {1, 2, 3, 4}, 
-          {5, 6, 7, 8}, 
-          {9, 10, 11, 12}, 
-          {13, 14, 15, 0}}, // Target state
-      .empty_row = 3, .empty_col = 3, .num_steps = 0
-  });
+  //       deserialShow(cur, (struct game_state){.tiles = {
+  //         {1, 2, 3, 4}, 
+  //         {5, 6, 7, 8}, 
+  //         {9, 10, 11, 12}, 
+  //         {13, 14, 15, 0}}, // Target state
+  //     .empty_row = 3, .empty_col = 3, .num_steps = 0
+  // });
     }
     
     return -1; // No solution found
